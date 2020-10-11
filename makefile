@@ -16,7 +16,7 @@ LDDFLAGS =
 # 源码
 SRCPUB = publisher.cpp
 SRCSUB = subscriber.cpp
-SRCPS = pubsub.cpp
+SRCPS = pubsuber.cpp
 
 # 依赖
 OBJPUB := $(SRCPUB:.cpp=.o)
