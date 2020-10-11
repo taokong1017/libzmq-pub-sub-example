@@ -3,7 +3,7 @@
 #include <cassert>
 #include <unistd.h>
 
-int main()
+int main(int argc, char** argv)
 {
     std::cout << "ZMQ Publiser using libzmq" << std::endl;
 
@@ -18,7 +18,7 @@ int main()
         str = "msg" + std::to_string(rand() % 10000); // publish msg0 up to msg9999
         std::cout << "Publishing " << str << std::endl;
         zmq_send(pub, str.c_str(), str.length(), 0);
-        sleep(2);
+        sleep(1);
     }
 
     return 0;

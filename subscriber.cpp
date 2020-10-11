@@ -3,12 +3,10 @@
 #include <iostream>
 #include <unistd.h>
 
-int main()
+int main(int argc, char** argv)
 {
     std::cout << "ZMQ Subscriber using libzmq" << std::endl;
-    std::string pattern;
-    std::cout << "Enter a pattern to subscribe to: [msg0 -> msg9999] " << std::endl;
-    std::cin >> pattern;
+    std::string pattern = "msg";
     void *ctx = zmq_ctx_new();
     void *sub = zmq_socket(ctx, ZMQ_SUB);
     zmq_connect(sub, "tcp://localhost:5570");
@@ -19,7 +17,6 @@ int main()
         char buffer[10];
         zmq_recv(sub, buffer, 10, 0);
         std::cout << "Received from server: " << buffer << std::endl;
-        sleep(1);
     }
 
     zmq_close(sub);

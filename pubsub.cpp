@@ -1,5 +1,7 @@
-#include <cstdlib>
 #include <iostream>
+#include <future>
+#include <thread>
+#include <vector>
 
 int main(int argc, char *argv[])
 {
@@ -16,8 +18,13 @@ int main(int argc, char *argv[])
             std::cout << "number of subscribers should be greater than 0" << std::endl;
             return 0;
         }
-        system("dbus-launch gnome-terminal -- \"./publisher\"");
+
+        std::vector<std::future<void>> fv;
+        fv.push_back(std::async(std::launch::async, []{ system("./publisher"); }));
         for(int i = 0; i < n; i++)
-            system("dbus-launch gnome-terminal -- \"./subscriber\"");
+            fv.push_back(std::async(std::launch::async, []{ system("./subscriber"); }));
+
+        for(auto & f : fv)
+            f.wait();
     }
 }
